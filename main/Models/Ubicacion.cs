@@ -12,7 +12,8 @@ namespace main.Models
 
         // FK -> Reporte
         public int id_reporte { get; set; }
-
+        
+        // Holaaa
         [ForeignKey("id_reporte")]
         public Reporte Reporte { get; set; }
 
