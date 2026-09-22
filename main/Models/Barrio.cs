@@ -4,19 +4,25 @@ using System.Text;
 
 namespace main.Models
 {
-    internal class Barrio
+    public class Barrio
     {
         // ID
         [Key]
-        public int id_barrio {  get; set; }
+        public int Id_barrio {  get; set; }
 
         // Relacion N:N Alerta
-        public ICollection<Barrio_Alerta> Alertas { get; set; } = new List <Barrio_Alerta> ();
+        public ICollection<Barrio_Alerta> BarrioAlertas { get; set; } = new List <Barrio_Alerta> ();
 
         // Relacion 1:N Ciudadano
         public ICollection<Ciudadano> Ciudadanos { get; set; } = new List <Ciudadano> ();
         
         // Datos
-        public string nombre { get; set; }
+        public string nombre { get; set; } = null!;
+
+
+        public Barrio ()
+        {
+
+        }
     }
 }

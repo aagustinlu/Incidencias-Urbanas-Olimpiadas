@@ -4,24 +4,29 @@ using System.Text;
 
 namespace main.Models
 {
-    internal class Ubicacion
+    public class Ubicacion
     {
         // ID de ubicacion de
         [Key]
-        public int id_ubicacion { get; set; }
+        public int Id_ubicacion { get; set; }
 
         // FK -> Reporte
-        public int id_reporte { get; set; }
+        public int Id_reporte { get; set; }
         
         // Holaaa
         [ForeignKey("id_reporte")]
-        public Reporte Reporte { get; set; }
+        public Reporte Reporte { get; set; } = null!;
 
         // Datos 
-        public string calle { get; set; }
+        public string calle { get; set; } = null!;
         public int altura { get; set; }
         public int latitud { get; set; }
-        public string informacion_adicional { get; set; }
-        
+        public string informacion_adicional { get; set; } = null!;
+
+
+        public Ubicacion ()
+        {
+
+        }
     }
 }
