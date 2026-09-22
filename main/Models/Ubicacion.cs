@@ -6,13 +6,14 @@ namespace main.Models
 {
     internal class Ubicacion
     {
-        // ID
+        // ID de ubicacion de
         [Key]
         public int id_ubicacion { get; set; }
 
         // FK -> Reporte
         public int id_reporte { get; set; }
-
+        
+        // Holaaa
         [ForeignKey("id_reporte")]
         public Reporte Reporte { get; set; }
 
