@@ -4,23 +4,31 @@ using System.Text;
 
 namespace main.Models
 {
-    internal class Reporte
+    public class Reporte
     {
         // ID
-        public int id_reporte {  get; set; }
+        [Key]
+        public int Id_reporte {  get; set; }
 
-        public int id_ubicacion { get; set; }
+        // FK -> Ubicacion
+        public int Id_ubicacion { get; set; }
 
         // FK -> Usuario
-        public int id_usuario { get; set; }
+        public int Id_usuario { get; set; }
 
         [ForeignKey("id_usuario")]
-        public Usuario Usuario { get; set; }
+        public Usuario Usuario { get; set; } = null!;
 
         // Datos
-        public DateTime fecha_creacion { get; set; }
-        public string descripcion { get; set; }
+        public DateTime fecha_creacion { get; set; } = DateTime.Now;
+        public string? descripcion { get; set; } 
         public DateTime fecha_modificacion { get; set; }
         public bool activo { get; set; }
+
+
+        public Reporte ()
+        {
+
+        }
     }
 }
