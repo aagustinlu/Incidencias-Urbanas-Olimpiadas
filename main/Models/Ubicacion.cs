@@ -6,7 +6,7 @@ namespace main.Models
 {
     internal class Ubicacion
     {
-        // ID de ubicacion
+        // ID de ubicacion de
         [Key]
         public int id_ubicacion { get; set; }
 
