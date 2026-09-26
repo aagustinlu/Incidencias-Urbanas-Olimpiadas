@@ -10,20 +10,22 @@ namespace main.Models
         [Key]
         public int Id_reporte {  get; set; }
 
-        // FK -> Ubicacion
-        public int Id_ubicacion { get; set; }
-
-        // FK -> Usuario
+        // FK -> Usuario (quien hizo el reporte)
         public int Id_usuario { get; set; }
 
-        [ForeignKey("id_usuario")]
+        [ForeignKey("Id_usuario")]
         public Usuario Usuario { get; set; } = null!;
 
+        // 1:1 con Ubicacion. La FK vive del lado de Ubicacion (Ubicacion.Id_reporte).
+        public Ubicacion? Ubicacion { get; set; }
+
         // Datos
+        public string categoria { get; set; } = null!;
+        public string titulo { get; set; } = null!;
+        public string? descripcion { get; set; }
         public DateTime fecha_creacion { get; set; } = DateTime.Now;
-        public string? descripcion { get; set; } 
-        public DateTime fecha_modificacion { get; set; }
-        public bool activo { get; set; }
+        public DateTime fecha_modificacion { get; set; } = DateTime.Now;
+        public bool activo { get; set; } = true;
 
 
         public Reporte ()

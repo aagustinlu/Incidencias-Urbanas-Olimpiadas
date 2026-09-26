@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Moroncito · Ingresar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section id="loginView" class="login-view">
+  <div class="login-card">
+    <div class="badge login-badge"><img src="img/MdM.jpg" alt="Logo Municipio de Morón"></div>
+    <h1>Moroncito</h1>
+    <p class="login-sub">Ingresá tus datos para reportar una incidencia.</p>
+
+    <form id="formLogin" novalidate>
+      <div class="campo">
+        <label for="dni">DNI</label>
+        <input type="text" id="dni" inputmode="numeric" placeholder="Sin puntos, ej: 30123456">
+        <p class="error" id="errDni">Ingresá un DNI válido (7 u 8 números).</p>
+      </div>
+      <div class="fila">
+        <div class="campo">
+          <label for="loginNombre">Nombre</label>
+          <input type="text" id="loginNombre" placeholder="Tu nombre">
+          <p class="error" id="errNombre">Ingresá tu nombre.</p>
+        </div>
+        <div class="campo">
+          <label for="loginApellido">Apellido</label>
+          <input type="text" id="loginApellido" placeholder="Tu apellido">
+          <p class="error" id="errApellido">Ingresá tu apellido.</p>
+        </div>
+      </div>
+      <div class="campo">
+        <label for="loginBarrio">Barrio</label>
+        <select id="loginBarrio">
+          <option value="" disabled selected>Elegí tu barrio</option>
+          <option value="Morón">Morón</option>
+          <option value="Castelar">Castelar</option>
+          <option value="Haedo">Haedo</option>
+          <option value="Villa Sarmiento">Villa Sarmiento</option>
+          <option value="El Palomar">El Palomar</option>
+        </select>
+        <p class="error" id="errBarrio">Elegí tu barrio.</p>
+      </div>
+      <div class="campo">
+        <label for="loginPass">Contraseña</label>
+        <input type="password" id="loginPass" placeholder="Tu contraseña">
+        <p class="error" id="errPass">Ingresá tu contraseña.</p>
+      </div>
+      <p class="login-nota">Si es tu primera vez, se crea la cuenta con estos datos.</p>
+      <button type="submit" class="btn-enviar login-btn">Ingresar</button>
+    </form>
+  </div>
+</section>
+
+<script src="login.js"></script>
+</body>
+</html>
