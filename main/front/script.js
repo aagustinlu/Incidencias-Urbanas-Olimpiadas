@@ -33,25 +33,33 @@ CATEGORIAS.forEach((cat, i) => {
   catsEl.appendChild(wrap);
 });
 
-function cargar(){
+// Ahora los reportes viven en la base de datos, no en localStorage.
+async function cargarReportes(){
   try{
-    return JSON.parse(localStorage.getItem('moroncito_incidencias') || '[]');
-  }catch(e){ return []; }
-}
-function guardar(lista){
-  try{ localStorage.setItem('moroncito_incidencias', JSON.stringify(lista)); }
-  catch(e){ console.error('No se pudo guardar', e); }
+    const resp = await fetch('/api/reportes');
+    if(!resp.ok) throw new Error('Respuesta no OK del servidor');
+    return await resp.json();
+  }catch(e){
+    console.error('No se pudieron cargar los reportes', e);
+    return null; // null = error de conexión, distinto de "lista vacía"
+  }
 }
 
-function render(){
-  const lista = cargar();
+async function render(){
   const ul = document.getElementById('lista');
-  ul.innerHTML = '';
+  const lista = await cargarReportes();
+
+  if(lista === null){
+    ul.innerHTML = '<p class="vacio">No se pudo conectar con el servidor. Intentá recargar la página.</p>';
+    return;
+  }
   if(!lista.length){
     ul.innerHTML = '<p class="vacio">Todavía no hay reportes. El primero puede ser el tuyo.</p>';
     return;
   }
-  lista.slice().reverse().forEach(rep => {
+
+  ul.innerHTML = '';
+  lista.forEach(rep => {
     const li = document.createElement('li');
     li.className = 'item';
     li.innerHTML = `
@@ -69,7 +77,7 @@ function render(){
   });
 }
 
-document.getElementById('formIncidencia').addEventListener('submit', e => {
+document.getElementById('formIncidencia').addEventListener('submit', async e => {
   e.preventDefault();
   const cat = document.querySelector('input[name=categoria]:checked');
   const titulo = document.getElementById('titulo').value.trim();
@@ -81,20 +89,39 @@ document.getElementById('formIncidencia').addEventListener('submit', e => {
   document.getElementById('errDireccion').style.display = direccion ? 'none' : 'block';
   if(!cat || !titulo || !direccion) return;
 
-  const lista = cargar();
-  const id = 1000 + lista.length;
-  lista.push({
-    id, categoria: cat.value, titulo, direccion, detalle,
-    fecha: new Date().toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'})
-  });
-  guardar(lista);
-
   const aviso = document.getElementById('aviso');
-  aviso.textContent = `Reporte enviado. Número de seguimiento: #${id}.`;
-  aviso.style.display = 'block';
+  aviso.style.display = 'none';
 
-  e.target.reset();
-  render();
+  try{
+    const resp = await fetch('/api/reportes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        categoria: cat.value,
+        titulo,
+        direccion,
+        detalle,
+        usuarioId: usuario.usuarioId
+      })
+    });
+
+    if(!resp.ok){
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.mensaje || 'No se pudo crear el reporte');
+    }
+
+    const creado = await resp.json();
+
+    aviso.textContent = `Reporte enviado. Número de seguimiento: #${creado.id}.`;
+    aviso.style.display = 'block';
+
+    e.target.reset();
+    render();
+  }catch(err){
+    console.error(err);
+    aviso.textContent = 'No se pudo enviar el reporte. Probá de nuevo en un momento.';
+    aviso.style.display = 'block';
+  }
 });
 
 render();

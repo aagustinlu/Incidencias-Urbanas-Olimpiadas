@@ -1,13 +1,5 @@
-function cargarUsuarios(){
-  try{ return JSON.parse(localStorage.getItem('moroncito_usuarios') || '[]'); }
-  catch(e){ return []; }
-}
-function guardarUsuarios(lista){
-  try{ localStorage.setItem('moroncito_usuarios', JSON.stringify(lista)); }
-  catch(e){ console.error('No se pudo guardar usuarios', e); }
-}
 function guardarSesion(u){
-  try{ localStorage.setItem('moroncito_sesion', JSON.stringify({dni:u.dni, nombre:u.nombre, apellido:u.apellido, barrio:u.barrio})); }
+  try{ localStorage.setItem('moroncito_sesion', JSON.stringify(u)); }
   catch(e){ console.error('No se pudo guardar la sesión', e); }
 }
 function cargarSesion(){
@@ -20,7 +12,7 @@ if(cargarSesion()){
   window.location.href = 'index.html';
 }
 
-document.getElementById('formLogin').addEventListener('submit', e => {
+document.getElementById('formLogin').addEventListener('submit', async e => {
   e.preventDefault();
   const dni = document.getElementById('dni').value.trim();
   const nombre = document.getElementById('loginNombre').value.trim();
@@ -38,28 +30,39 @@ document.getElementById('formLogin').addEventListener('submit', e => {
   errPass.style.display = pass ? 'none' : 'block';
   if(!dniValido || !nombre || !apellido || !barrio || !pass) return;
 
-  const usuarios = cargarUsuarios();
-  const existente = usuarios.find(u => u.dni === dni);
+  const btn = document.querySelector('.login-btn');
+  if(btn){ btn.disabled = true; btn.textContent = 'Ingresando...'; }
 
-  if(existente){
-    if(existente.password !== pass){
+  try{
+    const resp = await fetch('/api/usuarios/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dni, nombre, apellido, barrio, password: pass })
+    });
+
+    if(resp.status === 401){
       errPass.textContent = 'Contraseña incorrecta. Volvé a intentarlo.';
       errPass.style.display = 'block';
       document.getElementById('loginPass').value = '';
       document.getElementById('loginPass').focus();
       return;
     }
-    if(!existente.barrio){
-      existente.barrio = barrio;
-      guardarUsuarios(usuarios);
-    }
-    guardarSesion(existente);
-  } else {
-    const nuevo = { dni, nombre, apellido, barrio, password: pass };
-    usuarios.push(nuevo);
-    guardarUsuarios(usuarios);
-    guardarSesion(nuevo);
-  }
 
-  window.location.href = 'index.html';
+    if(!resp.ok){
+      errPass.textContent = 'No se pudo conectar con el servidor. Probá de nuevo.';
+      errPass.style.display = 'block';
+      return;
+    }
+
+    // La sesión ahora viene del backend (incluye el usuarioId real de la base)
+    const sesion = await resp.json();
+    guardarSesion(sesion);
+    window.location.href = 'index.html';
+  }catch(err){
+    console.error(err);
+    errPass.textContent = 'No se pudo conectar con el servidor. Probá de nuevo.';
+    errPass.style.display = 'block';
+  }finally{
+    if(btn){ btn.disabled = false; btn.textContent = 'Ingresar'; }
+  }
 });

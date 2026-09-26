@@ -13,13 +13,13 @@ namespace main.Models
         // FK -> Barrio
         public int Id_barrio { get; set; }
 
-        [ForeignKey("id_barrio")]
+        [ForeignKey("Id_barrio")]
         public Barrio Barrio { get; set; } = null!;
 
         // FK -> Alerta
         public int Id_alerta { get; set; }
 
-        [ForeignKey("id_alerta")]
+        [ForeignKey("Id_alerta")]
         public Alerta Alerta { get; set; } = null!;
 
 
