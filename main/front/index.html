@@ -4,11 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Moroncito · Reportar incidencias</title>
+<link rel="icon" type="image/png" href="./img/icono_moron.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="app-view">
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="icon-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.45 1 .96 1.1 1.6h4.8c.1-.64.5-1.15 1.1-1.6A6 6 0 0 0 12 3Z"/></symbol>
+  <symbol id="icon-road" viewBox="0 0 24 24"><path d="M9 3 4 21M15 3l5 18M12 8v2M12 13v2M12 18v1"/></symbol>
+  <symbol id="icon-leaf" viewBox="0 0 24 24"><path d="M20 4C10 4 4 10 4 18c8 0 14-6 14-14ZM8 18c2-4 5-7 9-9"/></symbol>
+  <symbol id="icon-megaphone" viewBox="0 0 24 24"><path d="M3 10v4a2 2 0 0 0 2 2h1l2 5h2l-1.6-5H12l7 4V6l-7 4H5a2 2 0 0 0-2 2Z"/></symbol>
+  <symbol id="icon-tree" viewBox="0 0 24 24"><path d="M12 3 7 11h3l-4 6h5v4h2v-4h5l-4-6h3Z"/></symbol>
+  <symbol id="icon-drop" viewBox="0 0 24 24"><path d="M12 3s7 7.6 7 12a7 7 0 1 1-14 0c0-4.4 7-12 7-12Z"/></symbol>
+  <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6Z"/></symbol>
+  <symbol id="icon-clipboard" viewBox="0 0 24 24"><path d="M9 4h6v2H9zM6 6h12v14H6zM9 12l2 2 4-4"/></symbol>
+</svg>
 
 <header>
   <div class="wrap">
@@ -60,17 +72,6 @@
         <textarea id="detalle" placeholder="Sumá cualquier detalle que ayude"></textarea>
       </div>
 
-      <div class="fila">
-        <div class="campo">
-          <label for="nombre">Nombre <span class="opt">(opcional)</span></label>
-          <input type="text" id="nombre" placeholder="Tu nombre">
-        </div>
-        <div class="campo">
-          <label for="contacto">Contacto <span class="opt">(opcional)</span></label>
-          <input type="text" id="contacto" placeholder="Email o teléfono">
-        </div>
-      </div>
-
       <button type="submit" class="btn-enviar">Enviar reporte</button>
       <p class="aviso" id="aviso"></p>
     </form>
@@ -79,10 +80,21 @@
 
 <div class="linea"></div>
 
-<section class="bloque">
+<section class="bloque reportes-bloque">
   <div class="wrap">
-    <h3>Reportes recientes</h3>
-    <p class="sub">Guardados en este navegador.</p>
+    <div class="reportes-encabezado">
+      <div>
+        <h3>Reportes recientes</h3>
+        <p class="sub">Visibles para todo tu barrio.</p>
+      </div>
+      <p class="reportes-resumen" id="resumen"></p>
+    </div>
+
+    <div class="reportes-controles">
+      <input type="search" id="buscador" placeholder="Buscar por título o dirección…" aria-label="Buscar reportes">
+      <div class="filtros" id="filtrosCategoria" role="group" aria-label="Filtrar por categoría"></div>
+    </div>
+
     <ul class="lista" id="lista"></ul>
   </div>
 </section>

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Moroncito · Ingresar</title>
+<link rel="icon" type="image/png" href="./img/icono_moron.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -11,10 +12,55 @@
 <body>
 
 <section id="loginView" class="login-view">
-  <div class="login-card">
-    <div class="badge login-badge"><img src="img/MdM.jpg" alt="Logo Municipio de Morón"></div>
+
+  <div class="login-brand">
+    <div class="login-emblem"><img src="img/MdM.jpg" alt="Logo Municipio de Morón"></div>
+    <p class="login-eyebrow">Municipio de Morón</p>
     <h1>Moroncito</h1>
-    <p class="login-sub">Ingresá tus datos para reportar una incidencia.</p>
+    <p class="login-tagline">Tu barrio, un poco mejor cada día.</p>
+
+    <ol class="pasos">
+      <li>
+        <span class="paso-num">1</span>
+        <div>
+          <strong>Ingresá con tu DNI</strong>
+          <p>Si es tu primera vez, la cuenta se crea sola.</p>
+        </div>
+      </li>
+      <li>
+        <span class="paso-num">2</span>
+        <div>
+          <strong>Contanos qué pasa y dónde</strong>
+          <p>Elegís una categoría, un título y la dirección.</p>
+        </div>
+      </li>
+      <li>
+        <span class="paso-num">3</span>
+        <div>
+          <strong>Quedá a la vista de tu barrio</strong>
+          <p>Tu reporte se suma al listado, visible para todos.</p>
+        </div>
+      </li>
+    </ol>
+
+    <svg class="login-skyline" viewBox="0 0 600 220" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <rect x="0" y="140" width="55" height="80"></rect>
+      <rect x="60" y="100" width="40" height="120"></rect>
+      <rect x="108" y="150" width="60" height="70"></rect>
+      <rect x="176" y="70" width="45" height="150"></rect>
+      <rect x="228" y="120" width="35" height="100"></rect>
+      <rect x="270" y="40" width="50" height="180"></rect>
+      <rect x="328" y="110" width="42" height="110"></rect>
+      <rect x="378" y="160" width="65" height="60"></rect>
+      <rect x="450" y="90" width="38" height="130"></rect>
+      <rect x="495" y="130" width="55" height="90"></rect>
+      <rect x="555" y="150" width="45" height="70"></rect>
+    </svg>
+  </div>
+
+  <div class="login-card">
+    <h2 class="login-card-title">Ingresá tus datos</h2>
+    <p class="login-card-sub">Los necesitamos para identificarte y avisarte cómo sigue tu reporte.</p>
 
     <form id="formLogin" novalidate>
       <div class="campo">
